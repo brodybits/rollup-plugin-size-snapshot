@@ -397,7 +397,7 @@ test("handle umd with esm", async () => {
       gzipped: 139,
       treeshaked: {
         rollup: { code: 162 },
-        webpack: expect.toMatchCloseTo({ code: 1260 }, -1.5) // +/- ~15
+        webpack: expect.toMatchCloseTo({ code: 1260 }, -1.7) // +/- ~25
       },
     },
   });
