@@ -6,6 +6,9 @@ import { terser } from "rollup-plugin-terser";
 import { sizeSnapshot } from "../src";
 import stripAnsi from "strip-ansi";
 
+import { toMatchCloseTo } from 'jest-matcher-deep-close-to';
+expect.extend({ toMatchCloseTo });
+
 process.chdir("tests");
 
 const last = arr => arr[Math.max(0, arr.length - 1)];
@@ -251,7 +254,7 @@ test("webpack does not provide node shims", async () => {
   expect(pullSnapshot(snapshotPath)).toMatchObject({
     "output.js": expect.objectContaining({
       treeshaked: expect.objectContaining({
-        webpack: { code: 523 }
+        webpack: expect.toMatchCloseTo({ code: 525 }, -1) // +/- ~5
       })
     })
   });

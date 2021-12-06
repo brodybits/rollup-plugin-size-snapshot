@@ -18,8 +18,7 @@ jobs:
         - ubuntu-latest
         # SKIP Windows for now due to a variation in output size:
         # - windows-latest
-        # SKIP macOS for now due to a variation in a test output size:
-        # - macos-latest
+        - macos-latest
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version:
         - 10.x
