@@ -23,9 +23,12 @@ jobs:
         node-version:
         - 6.x
         - 8.x
-        # SKIP Node.js 10(+) for now due to outdated upath in yarn.lock
-        # - 10.x
-        # ...
+        - 10.x
+        - 12.x
+        - 14.x
+        - 16.x
+        # SKIP due to known issue with Webpack 4:
+        # - 17.x
 
     steps:
     - uses: actions/checkout@v2
