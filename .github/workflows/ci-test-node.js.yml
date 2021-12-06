@@ -18,17 +18,15 @@ jobs:
         - ubuntu-latest
         # SKIP Windows for now due to a variation in output size:
         # - windows-latest
-        - macos-latest
+        # SKIP macOS for now due to a variation in a test output size:
+        # - macos-latest
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version:
-        - 6.x
-        - 8.x
         - 10.x
         - 12.x
         - 14.x
         - 16.x
-        # SKIP due to known issue with Webpack 4:
-        # - 17.x
+        - 17.x
 
     steps:
     - uses: actions/checkout@v2

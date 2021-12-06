@@ -161,7 +161,7 @@ test("print sizes with treeshaked size for 'esm' format", async () => {
     "  treeshaked with rollup with production NODE_ENV and minified: 0 B\n"
   );
   expect(arg).toContain(
-    "  treeshaked with webpack in production mode: 951 B\n"
+    "  treeshaked with webpack in production mode: 0 B\n"
   );
 
   consoleInfo.mockRestore();
@@ -179,7 +179,7 @@ test("write treeshaked with rollup and webpack sizes for 'esm' format", async ()
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 0 }),
-        webpack: expect.objectContaining({ code: 951 })
+        webpack: expect.objectContaining({ code: 0 })
       }
     })
   });
@@ -197,7 +197,7 @@ test("treeshake pure annotations with rollup and terser or webpack", async () =>
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 0 }),
-        webpack: expect.objectContaining({ code: 951 })
+        webpack: expect.objectContaining({ code: 0 })
       }
     })
   });
@@ -216,7 +216,7 @@ test("treeshake with both rollup or webpack and external modules", async () => {
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 14 }),
-        webpack: expect.objectContaining({ code: 1016 })
+        webpack: expect.objectContaining({ code: 40 })
       }
     })
   });
@@ -234,7 +234,7 @@ test("rollup treeshake should replace NODE_ENV in symmetry to webpack", async ()
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 0 }),
-        webpack: expect.objectContaining({ code: 951 })
+        webpack: expect.objectContaining({ code: 0 })
       }
     })
   });
@@ -251,7 +251,7 @@ test("webpack does not provide node shims", async () => {
   expect(pullSnapshot(snapshotPath)).toMatchObject({
     "output.js": expect.objectContaining({
       treeshaked: expect.objectContaining({
-        webpack: { code: 1087 }
+        webpack: { code: 523 }
       })
     })
   });

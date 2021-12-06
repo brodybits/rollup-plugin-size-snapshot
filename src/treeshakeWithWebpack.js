@@ -25,16 +25,9 @@ export const treeshakeWithWebpack = (code: string): Promise<Output> => {
     mode: "production",
     // disable all node shims
     // https://webpack.js.org/configuration/node/
-    node: {
-      global: false,
-      process: false,
-      __filename: false,
-      __dirname: false,
-      Buffer: false,
-      setImmediate: false
-    },
+    node: false,
     externals: [
-      (context, request, callback) => {
+      ({ context, request }, callback) => {
         if (isExternal(request)) {
           callback(null, "commonjs " + request);
         } else {
