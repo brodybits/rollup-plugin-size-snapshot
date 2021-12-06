@@ -1,5 +1,9 @@
 # @brodybits/rollup-plugin-size-snapshot
 
+fork with update to use Webpack v5, as needed with Node.js 17 ref: [webpack/webpack#14532 (comment 985083189)](https://github.com/webpack/webpack/issues/14532#issuecomment-985083189)
+
+[![npm (scoped)](https://img.shields.io/npm/v/@brodybits/rollup-plugin-size-snapshot)](https://www.npmjs.com/package/@brodybits/rollup-plugin-size-snapshot)
+
 <img src="example2.png" />
 
 This plugin provides details about
@@ -25,6 +29,12 @@ import {} from "library";
 - easier to work without sourcemaps with vendors since development bundlers add a lot of unreadable stuff in module definition
 
 ## Usage
+
+NOTE: In this fork this usage assumes installation as a npm alias, for example:
+
+```console
+yarn add --dev rollup-plugin-size-snapshot@npm:@brodybits/rollup-plugin-size-snapshot@latest
+```
 
 ```js
 import { sizeSnapshot } from "rollup-plugin-size-snapshot";
