@@ -1,4 +1,6 @@
-# @brodybits/rollup-plugin-size-snapshot
+# @brodybits/rollup-plugin-size-snapshot v0.7.x
+
+@brodybits/rollup-plugin-size-snapshot v0.7.x branch with Rollup 0.x & Webpack 5 combined
 
 <img src="example2.png" />
 
