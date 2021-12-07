@@ -3,6 +3,7 @@
   "version": "0.13.1-dev",
   "main": "dist/index.js",
   "files": [
+    "LICENSE",
     "dist"
   ],
   "scripts": {
