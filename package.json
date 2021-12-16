@@ -25,15 +25,11 @@
   },
   "babel": {
     "presets": [
-      "@babel/flow",
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "10"
-          }
-        }
-      ]
+      "@babel/env",
+      "@babel/flow"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
     ]
   },
   "jest": {
