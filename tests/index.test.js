@@ -226,7 +226,7 @@ test("treeshake with both rollup or webpack and external modules", async () => {
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 14 }),
-        webpack: expect.objectContaining({ code: 40 }),
+        webpack: expect.objectContaining({ code: 50 }),
       },
     }),
   });
@@ -390,12 +390,12 @@ test("handle umd with esm", async () => {
 
   expect(snapshot).toMatchObject({
     "output.js": {
-      bundled: 330,
-      minified: 206,
-      gzipped: 139,
+      bundled: 269,
+      minified: 188,
+      gzipped: 137,
       treeshaked: {
-        rollup: { code: 162 },
-        webpack: expect.toMatchCloseTo({ code: 550 }, -1.7), // +/- ~25
+        rollup: { code: 154 },
+        webpack: expect.toMatchCloseTo({ code: 690 }, -1.7), // +/- ~25
       },
     },
   });
