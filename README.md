@@ -28,13 +28,17 @@ import {} from "library";
 - predictable and more efficient scope hoisting and as a result more predictable size
 - easier to work without sourcemaps with vendors since development bundlers add a lot of unreadable stuff in module definition
 
-## Usage
+## Recommended installation
 
-NOTE: In this fork this usage assumes installation as a npm alias, for example:
+It is recommended to install this fork as a npm alias, for example:
 
 ```console
 yarn add --dev rollup-plugin-size-snapshot@npm:@brodybits/rollup-plugin-size-snapshot@latest
 ```
+
+The usage below assumes this kind of installation for this fork.
+
+## Usage
 
 ```js
 import { sizeSnapshot } from "rollup-plugin-size-snapshot";
