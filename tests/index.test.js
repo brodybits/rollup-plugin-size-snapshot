@@ -390,11 +390,11 @@ test("handle umd with esm", async () => {
 
   expect(snapshot).toMatchObject({
     "output.js": {
-      bundled: 330,
-      minified: 206,
-      gzipped: 139,
+      bundled: 262,
+      minified: 184,
+      gzipped: 133,
       treeshaked: {
-        rollup: { code: 162 },
+        rollup: { code: 154 },
         webpack: expect.toMatchCloseTo({ code: 550 }, -1.7), // +/- ~25
       },
     },
