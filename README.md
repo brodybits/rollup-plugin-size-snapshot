@@ -1,14 +1,14 @@
-# @brodybits/rollup-plugin-size-snapshot v0.7.x
+# @brodybits/rollup-plugin-size-snapshot v0.7.x branch
 
-@brodybits/rollup-plugin-size-snapshot v0.7.x branch with Rollup 0.x & Webpack 5 combined
+@brodybits/rollup-plugin-size-snapshot v0.7.x branch with Webpack 5 together with Rollup 0.x support, to support react-recompose build
 
 <img src="example2.png" />
 
 This plugin provides details about
 
-* actual bundle size (bundler parsing size)
-* minified bundle size (browser parsing size)
-* gzipped bundle size (download size)
+- actual bundle size (bundler parsing size)
+- minified bundle size (browser parsing size)
+- gzipped bundle size (download size)
 
 All of these sizes are important criteria when choosing a library, and they will be stored in the `.size-snapshot.json` file.
 
@@ -21,10 +21,20 @@ import {} from "library";
 
 ## Why bundle with rollup
 
-* internals are hidden so you shouldn't worry that user reuses your frequently updated modules
-* faster user bundling if library has a lot of modules
-* predictable and more efficient scope hoisting and as a result more predictable size
-* easier to work without sourcemaps with vendors since development bundlers add a lot of unreadable stuff in module definition
+- internals are hidden so you shouldn't worry that user reuses your frequently updated modules
+- faster user bundling if library has a lot of modules
+- predictable and more efficient scope hoisting and as a result more predictable size
+- easier to work without sourcemaps with vendors since development bundlers add a lot of unreadable stuff in module definition
+
+## Recommended installation
+
+It is recommended to install this fork as a npm alias, for example:
+
+```console
+yarn add --dev rollup-plugin-size-snapshot@npm:@brodybits/rollup-plugin-size-snapshot@patch-v0.7.x
+```
+
+The usage below assumes this kind of installation for this fork.
 
 ## Usage
 
@@ -58,14 +68,14 @@ export default {
 
 ### snapshotPath
 
-type: `string`  
+type: `string`
 default: `'.size-snapshot.json'`
 
 ### matchSnapshot
 
 This option allows you to verify that contributors don't forget to build or commit the `.size-snapshot.json` file. If this is `true`, the plugin will validate the snapshot against an existing one.
 
-type: `boolean`  
+type: `boolean`
 default: `false`
 
 ### threshold
@@ -74,14 +84,14 @@ Possible difference between sizes in actual snapshot and generated one.
 
 Note: Make sense only when `matchSnapshot` is `true`.
 
-type: `number`  
+type: `number`
 default: `0`
 
 ### printInfo
 
 Allows you to disable log to terminal.
 
-type: `boolean`  
+type: `boolean`
 default: `true`
 
 # License
