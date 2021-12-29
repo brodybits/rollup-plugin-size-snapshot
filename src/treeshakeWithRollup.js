@@ -50,7 +50,10 @@ export const treeshakeWithRollup = (code: string): Promise<Output> => {
     .then(bundle => bundle.generate({ format: "es" }))
     .then(result => minify(result.code, { toplevel: true }))
     .then((result): Output => {
-      const ast = parse(result.code, { sourceType: "module" });
+      const ast = parse(result.code, {
+        sourceType: "module",
+        ecmaVersion: 2020
+      });
       const import_statements = ast.body
         // collect all toplevel import statements
         .filter(node => node.type === "ImportDeclaration")
