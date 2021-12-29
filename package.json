@@ -27,7 +27,7 @@
         "@babel/env",
         {
           "targets": {
-            "node": "6"
+            "node": "10"
           }
         }
       ]
@@ -67,5 +67,8 @@
     "rollup-plugin-replace": "^2.0.0",
     "terser": "^3.8.2",
     "webpack": "^5.65.0"
+  },
+  "engines": {
+    "node": ">=10"
   }
 }
