@@ -6,7 +6,7 @@ import { terser } from "rollup-plugin-terser";
 import { sizeSnapshot } from "../src";
 import stripAnsi from "strip-ansi";
 
-import { toMatchCloseTo } from 'jest-matcher-deep-close-to';
+import { toMatchCloseTo } from "jest-matcher-deep-close-to";
 expect.extend({ toMatchCloseTo });
 
 process.chdir("tests");
@@ -163,9 +163,7 @@ test("print sizes with treeshaked size for 'esm' format", async () => {
   expect(arg).toContain(
     "  treeshaked with rollup with production NODE_ENV and minified: 0 B\n"
   );
-  expect(arg).toContain(
-    "  treeshaked with webpack in production mode: 0 B\n"
-  );
+  expect(arg).toContain("  treeshaked with webpack in production mode: 0 B\n");
 
   consoleInfo.mockRestore();
 });
