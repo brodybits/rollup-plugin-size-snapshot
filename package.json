@@ -68,7 +68,7 @@
     "gzip-size": "^5.1.1",
     "jest-diff": "^26.6.2",
     "memory-fs": "^0.5.0",
-    "terser": "^3.8.2",
+    "terser": "^4.8.0",
     "webpack": "^5.65.0"
   },
   "engines": {

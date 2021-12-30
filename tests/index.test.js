@@ -55,8 +55,8 @@ test("write bundled, minified and gzipped size of es bundle", async () => {
   expect(snapshot).toMatchObject({
     "output.js": {
       bundled: 11160,
-      minified: 5464,
-      gzipped: 2091
+      minified: 5474,
+      gzipped: 2094
     }
   });
 });
@@ -75,8 +75,8 @@ test("print sizes", async () => {
   expect(stripAnsi(lastCallArg(consoleInfo))).toContain(
     'Computed sizes of "output.js" with "cjs" format\n' +
       "  bundler parsing size: 11,160 B\n" +
-      "  browser parsing size (minified with terser): 5,464 B\n" +
-      "  download size (minified and gzipped): 2,091 B\n"
+      "  browser parsing size (minified with terser): 5,474 B\n" +
+      "  download size (minified and gzipped): 2,094 B\n"
   );
 
   consoleInfo.mockRestore();
@@ -93,8 +93,8 @@ test("not affected by following terser plugin", async () => {
   expect(pullSnapshot(snapshotPath)).toMatchObject({
     "output.js": {
       bundled: 11160,
-      minified: 5464,
-      gzipped: 2091
+      minified: 5474,
+      gzipped: 2094
     }
   });
 });
@@ -133,8 +133,8 @@ test("match bundled, minified or gziped sizes", async () => {
   }
   const arg = lastCallArg(consoleError);
   expect(arg).toContain(`+   "bundled": 10971`);
-  expect(arg).toContain(`+   "minified": 5293`);
-  expect(arg).toContain(`+   "gzipped": 2032`);
+  expect(arg).toContain(`+   "minified": 5303`);
+  expect(arg).toContain(`+   "gzipped": 2034`);
   consoleError.mockRestore();
 });
 
