@@ -1,9 +1,9 @@
 // @flow
 
+import replace from "@rollup/plugin-replace";
 import { rollup } from "rollup";
 import { minify } from "terser";
 import { parse } from "acorn";
-import replace from "rollup-plugin-replace";
 import { isExternal } from "./utils.js";
 
 type Output = {
