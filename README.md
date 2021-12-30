@@ -1,6 +1,6 @@
 # @brodybits/rollup-plugin-size-snapshot v0.7.x branch
 
-@brodybits/rollup-plugin-size-snapshot v0.7.x branch with Webpack 5 together with Rollup 0.x support, to support react-recompose build
+@brodybits/rollup-plugin-size-snapshot v0.7.x branch with Webpack 5 together with Rollup 0.x support (at least 0.68.0), to support react-recompose build
 
 <img src="example2.png" />
 
