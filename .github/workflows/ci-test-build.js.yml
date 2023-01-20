@@ -21,7 +21,7 @@ jobs:
         node-version:
         # try lowest & highest for now, at least
         - 10.x
-        - 17.x
+        - 19.x
 
     steps:
     - uses: actions/checkout@v2
