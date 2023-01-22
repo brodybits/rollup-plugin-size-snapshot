@@ -77,7 +77,17 @@ export const sizeSnapshot = (options?: Options = {}): Plugin => {
 
       const outputName = chunk.fileName;
 
+      // Improvement with better error handling was proposed in
+      // brodybits/rollup-plugin-size-snapshot#17
+      // but a reproduction is needed to add a test case, see
+      // https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19
       const minified = minify(source).code;
+      if (!minified) {
+        throw new Error(
+          "INTERNAL ERROR - terser error - see https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19"
+        );
+      }
+
       const treeshakeSize = (code) =>
         Promise.all([treeshakeWithRollup(code), treeshakeWithWebpack(code)]);
 
