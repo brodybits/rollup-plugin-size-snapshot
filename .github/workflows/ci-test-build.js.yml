@@ -20,7 +20,7 @@ jobs:
         - macos-latest
         node-version:
         # try lowest & highest for now, at least
-        - 10.x
+        - 14.x
         - 19.x
 
     steps:
