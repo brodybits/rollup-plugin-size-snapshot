@@ -38,6 +38,11 @@ export const treeshakeWithWebpack = (code: string): Promise<Output> => {
     ],
   });
 
+  // TEMPORARY WORKAROUND SOLUTION:
+  if (code === "") {
+    return Promise.reject(new Error("no minified code for Webpack to process"));
+  }
+
   inputFS.writeFileSync(`/${inputName}`, `import {} from '/${bundleName}'`);
   inputFS.writeFileSync(`/${bundleName}`, code);
 

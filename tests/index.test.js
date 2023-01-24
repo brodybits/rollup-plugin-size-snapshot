@@ -445,5 +445,5 @@ test("reproduce failure for esm with comments only ref: brodybits/rollup-plugin-
       plugins: [sizeSnapshot({ snapshotPath })],
       output: { file: path.resolve("fixtures/output.js"), format: "esm" },
     });
-  }).rejects.toThrow(/INTERNAL ERROR - terser error/); // was "No content" in v0.13.2
+  }).rejects.toThrow(/no minified code for Webpack to process/);
 });
