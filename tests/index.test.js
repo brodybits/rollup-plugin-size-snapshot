@@ -123,17 +123,17 @@ test("not affected by following terser plugin", async () => {
   });
 });
 
-test("minifies with latest ES syntax", async () => {
+test("minifies with some ES2020 syntax features", async () => {
   const snapshotPath = "fixtures/next-features.size-snapshot.json";
   await runRollup({
     external: ["react"],
-    input: "./fixtures/next-features.js",
-    output: { file: "fixtures/next-features.esm.js", format: "esm" },
+    input: "./fixtures/es2020-features.js",
+    output: { file: "fixtures/es2020-features.esm.js", format: "esm" },
     plugins: [sizeSnapshot({ snapshotPath, printInfo: false }), terser()],
   });
 
   expect(pullSnapshot(snapshotPath)).toMatchObject({
-    "next-features.esm.js": {
+    "es2020-features.esm.js": {
       bundled: 224,
       minified: 180,
       gzipped: 150,
