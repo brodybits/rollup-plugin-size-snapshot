@@ -3,7 +3,7 @@
 import * as path from "path";
 import { readFileSync, unlinkSync } from "fs";
 import { rollup } from "rollup";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import { sizeSnapshot } from "../src";
 import stripAnsi from "strip-ansi";
 
@@ -119,6 +119,24 @@ test("not affected by following terser plugin", async () => {
       bundled: 11138,
       minified: 5474,
       gzipped: 2093,
+    },
+  });
+});
+
+test("minifies with latest ES syntax", async () => {
+  const snapshotPath = "fixtures/next-features.size-snapshot.json";
+  await runRollup({
+    external: ["react"],
+    input: "./fixtures/next-features.js",
+    output: { file: "fixtures/next-features.esm.js", format: "esm" },
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false }), terser()],
+  });
+
+  expect(pullSnapshot(snapshotPath)).toMatchObject({
+    "next-features.esm.js": {
+      bundled: 224,
+      minified: 180,
+      gzipped: 150,
     },
   });
 });

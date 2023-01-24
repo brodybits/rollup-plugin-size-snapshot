@@ -57,7 +57,7 @@ If you use uglify or terser plugins, then make sure they are placed after this o
 
 ```js
 import { uglify } from "rollup-plugin-uglify";
-// or import { terser } from "rollup-plugin-terser";
+// or import terser from "@rollup/plugin-terser";
 import { sizeSnapshot } from "rollup-plugin-size-snapshot";
 
 export default {
