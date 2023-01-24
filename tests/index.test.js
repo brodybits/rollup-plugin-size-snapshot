@@ -418,3 +418,50 @@ test("handle umd with esm", async () => {
     },
   });
 });
+
+test("cjs with empty source input (console warning expected in the Jest output)", async () => {
+  const snapshotPath = "fixtures/empty-source.size-snapshot.json";
+  await runRollup({
+    input: "./fixtures/empty-source.js",
+    plugins: [sizeSnapshot({ snapshotPath })],
+    output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
+  });
+  const snapshot = pullSnapshot(snapshotPath);
+
+  expect(snapshot).toMatchObject({
+    "output.js": {
+      bundled: 15,
+      minified: 13,
+      gzipped: 33,
+    },
+  });
+});
+
+test("cjs with comments only (console warning expected in the Jest output)", async () => {
+  const snapshotPath = "fixtures/comments-only.size-snapshot.json";
+  await runRollup({
+    input: "./fixtures/comments-only.js",
+    plugins: [sizeSnapshot({ snapshotPath })],
+    output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
+  });
+  const snapshot = pullSnapshot(snapshotPath);
+
+  expect(snapshot).toMatchObject({
+    "output.js": {
+      bundled: 15,
+      minified: 13,
+      gzipped: 33,
+    },
+  });
+});
+
+test("reproduce failure for esm with comments only ref: brodybits/rollup-plugin-size-snapshot#21", async () => {
+  const snapshotPath = "fixtures/comments-only.size-snapshot.json";
+  await expect(async () => {
+    await runRollup({
+      input: "./fixtures/comments-only.js",
+      plugins: [sizeSnapshot({ snapshotPath })],
+      output: { file: path.resolve("fixtures/output.js"), format: "esm" },
+    });
+  }).rejects.toThrow(/no minified code for Webpack to process/);
+});
