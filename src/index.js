@@ -69,7 +69,7 @@ export const sizeSnapshot = (options?: Options = {}): Plugin => {
   return {
     name: "size-snapshot",
 
-    renderChunk(rawSource, chunk, outputOptions) {
+    async renderChunk(rawSource, chunk, outputOptions) {
       // remove windows specific newline character
       const source = rawSource.replace(/\r/g, "");
       const format = outputOptions.format;
@@ -81,7 +81,7 @@ export const sizeSnapshot = (options?: Options = {}): Plugin => {
       // brodybits/rollup-plugin-size-snapshot#17
       // but a reproduction is needed to add a test case, see
       // https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19
-      const minifyResult = minify(source);
+      const minifyResult = await minify(source);
       const minified = minifyResult.code;
       if (!minified && minified !== "") {
         // TODO needs test case with a reproduction, see
