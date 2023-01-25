@@ -1,6 +1,6 @@
 {
   "name": "@brodybits/rollup-plugin-size-snapshot",
-  "version": "0.14.0-dev",
+  "version": "0.14.0",
   "main": "dist/index.js",
   "files": [
     "LICENSE",
