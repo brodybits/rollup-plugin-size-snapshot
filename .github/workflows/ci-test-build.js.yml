@@ -19,9 +19,10 @@ jobs:
         - windows-latest
         - macos-latest
         node-version:
-        # try lowest & highest for now, at least
-        - 12.x
-        - 17.x
+        # try lowest & highest LTS & non-LTS for now, at least
+        - 14.x
+        - 18.x
+        - 19.x
 
     steps:
     - uses: actions/checkout@v2

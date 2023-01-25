@@ -2,7 +2,7 @@
 
 fork with update to use Webpack v5, as needed with Node.js 17 ref: [webpack/webpack#14532 (comment 985083189)](https://github.com/webpack/webpack/issues/14532#issuecomment-985083189)
 
-[![npm (scoped)](https://img.shields.io/npm/v/@brodybits/rollup-plugin-size-snapshot)](https://www.npmjs.com/package/@brodybits/rollup-plugin-size-snapshot)
+[![npm (scoped)](https://img.shields.io/npm/v/@brodybits/rollup-plugin-size-snapshot?label=%40brodybits%2Frollup-plugin-size-snapshot)](https://www.npmjs.com/package/@brodybits/rollup-plugin-size-snapshot)
 
 <img src="example2.png" />
 
@@ -57,7 +57,7 @@ If you use uglify or terser plugins, then make sure they are placed after this o
 
 ```js
 import { uglify } from "rollup-plugin-uglify";
-// or import { terser } from "rollup-plugin-terser";
+// or import terser from "@rollup/plugin-terser";
 import { sizeSnapshot } from "rollup-plugin-size-snapshot";
 
 export default {
