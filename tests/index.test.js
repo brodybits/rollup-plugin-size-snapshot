@@ -145,19 +145,19 @@ test("match bundled, minified or gziped sizes", async () => {
   const consoleError = jest
     .spyOn(console, "error")
     .mockImplementation(() => {});
+
   const snapshotPath = "fixtures/mismatch.size-snapshot.json";
-  try {
+
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
       plugins: [sizeSnapshot({ snapshotPath, matchSnapshot: true })],
     });
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain(
-      "Size snapshot is not matched. Run rollup to rebuild one."
-    );
-  }
+  }).rejects.toThrow(
+    /Size snapshot is not matched. Run rollup to rebuild one./
+  );
+
   const arg = lastCallArg(consoleError);
   expect(arg).toContain(`+   "bundled": 10949`);
   expect(arg).toContain(`+   "minified": 5303`);
@@ -313,7 +313,7 @@ test("rollup treeshaker shows imports size", async () => {
 test("fail when matching missing snapshot", async () => {
   const snapshotPath = "fixtures/missing.size-snapshot.json";
 
-  try {
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
@@ -321,13 +321,9 @@ test("fail when matching missing snapshot", async () => {
         sizeSnapshot({ snapshotPath, matchSnapshot: true, printInfo: false }),
       ],
     });
-
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain(
-      "Size snapshot is missing. Please run rollup to create one."
-    );
-  }
+  }).rejects.toThrow(
+    /Size snapshot is missing. Please run rollup to create one./
+  );
 });
 
 test("match snapshot with threshold", async () => {
@@ -347,7 +343,7 @@ test("match snapshot with threshold", async () => {
     ],
   });
 
-  try {
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
@@ -360,11 +356,9 @@ test("match snapshot with threshold", async () => {
         }),
       ],
     });
-
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain("Size snapshot is not matched");
-  }
+  }).rejects.toThrow(
+    /Size snapshot is not matched. Run rollup to rebuild one./
+  );
 
   errorFn.mockRestore();
 });
