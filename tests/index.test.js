@@ -16,7 +16,8 @@ const last = (arr) => arr[Math.max(0, arr.length - 1)];
 
 const lastCallArg = (mockFn) => last(mockFn.mock.calls)[0];
 
-const runRollup = async (options) => {
+const runRollup = async (opts) => {
+  const options = { onwarn: (message) => {}, ...opts };
   const bundle = await rollup(options);
   const result = await bundle.generate(options.output);
   return result;
@@ -395,7 +396,7 @@ test("handle umd with esm", async () => {
   const snapshotPath = "fixtures/umd.size-snapshot.json";
   await runRollup({
     input: "./fixtures/umd.js",
-    plugins: [sizeSnapshot({ snapshotPath })],
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
     output: { file: path.resolve("fixtures/output.js"), format: "esm" },
   });
   const snapshot = pullSnapshot(snapshotPath);
@@ -417,7 +418,7 @@ test("cjs with empty source input (console warning expected in the Jest output)"
   const snapshotPath = "fixtures/empty-source.size-snapshot.json";
   await runRollup({
     input: "./fixtures/empty-source.js",
-    plugins: [sizeSnapshot({ snapshotPath })],
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
     output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
   });
   const snapshot = pullSnapshot(snapshotPath);
@@ -435,7 +436,7 @@ test("cjs with comments only (console warning expected in the Jest output)", asy
   const snapshotPath = "fixtures/comments-only.size-snapshot.json";
   await runRollup({
     input: "./fixtures/comments-only.js",
-    plugins: [sizeSnapshot({ snapshotPath })],
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
     output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
   });
   const snapshot = pullSnapshot(snapshotPath);
@@ -454,7 +455,7 @@ test("reproduce failure for esm with comments only ref: brodybits/rollup-plugin-
   await expect(async () => {
     await runRollup({
       input: "./fixtures/comments-only.js",
-      plugins: [sizeSnapshot({ snapshotPath })],
+      plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
       output: { file: path.resolve("fixtures/output.js"), format: "esm" },
     });
   }).rejects.toThrow(/no minified code for Webpack to process/);
