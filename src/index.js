@@ -69,7 +69,7 @@ export const sizeSnapshot = (options?: Options = {}): Plugin => {
   return {
     name: "size-snapshot",
 
-    renderChunk(rawSource, chunk, outputOptions) {
+    async renderChunk(rawSource, chunk, outputOptions) {
       // remove windows specific newline character
       const source = rawSource.replace(/\r/g, "");
       const format = outputOptions.format;
@@ -77,14 +77,18 @@ export const sizeSnapshot = (options?: Options = {}): Plugin => {
 
       const outputName = chunk.fileName;
 
-      // Improvement with better error handling was proposed in
+      // Cleaner error reporting was discussed in
       // brodybits/rollup-plugin-size-snapshot#17
       // but a reproduction is needed to add a test case, see
       // https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19
-      const minified = minify(source).code;
-      if (!minified) {
+      const minifyResult = await minify(source);
+      const minified = minifyResult.code;
+      if (!minified && minified !== "") {
+        // TODO needs test case with a reproduction, see
+        // https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19
         throw new Error(
-          "INTERNAL ERROR - terser error - see https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19"
+          "INTERNAL ERROR - terser error - see https://github.com/brodybits/rollup-plugin-size-snapshot/issues/19 " +
+            JSON.stringify(minifyResult)
         );
       }
 

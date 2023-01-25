@@ -1,7 +1,7 @@
 // @flow
 
 import { readFileSync, writeFileSync } from "fs";
-import diff from "jest-diff";
+import { diff } from "jest-diff";
 
 type Params = {|
   snapshotPath: string,

@@ -3,7 +3,7 @@
 import * as path from "path";
 import { readFileSync, unlinkSync } from "fs";
 import { rollup } from "rollup";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import { sizeSnapshot } from "../src";
 import stripAnsi from "strip-ansi";
 
@@ -16,7 +16,8 @@ const last = (arr) => arr[Math.max(0, arr.length - 1)];
 
 const lastCallArg = (mockFn) => last(mockFn.mock.calls)[0];
 
-const runRollup = async (options) => {
+const runRollup = async (opts) => {
+  const options = { onwarn: (message) => {}, ...opts };
   const bundle = await rollup(options);
   const result = await bundle.generate(options.output);
   return result;
@@ -123,23 +124,41 @@ test("not affected by following terser plugin", async () => {
   });
 });
 
+test("minifies with some ES2020 syntax features", async () => {
+  const snapshotPath = "fixtures/next-features.size-snapshot.json";
+  await runRollup({
+    external: ["react"],
+    input: "./fixtures/es2020-features.js",
+    output: { file: "fixtures/es2020-features.esm.js", format: "esm" },
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false }), terser()],
+  });
+
+  expect(pullSnapshot(snapshotPath)).toMatchObject({
+    "es2020-features.esm.js": {
+      bundled: 224,
+      minified: 180,
+      gzipped: 150,
+    },
+  });
+});
+
 test("match bundled, minified or gziped sizes", async () => {
   const consoleError = jest
     .spyOn(console, "error")
     .mockImplementation(() => {});
+
   const snapshotPath = "fixtures/mismatch.size-snapshot.json";
-  try {
+
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
       plugins: [sizeSnapshot({ snapshotPath, matchSnapshot: true })],
     });
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain(
-      "Size snapshot is not matched. Run rollup to rebuild one."
-    );
-  }
+  }).rejects.toThrow(
+    /Size snapshot is not matched. Run rollup to rebuild one./
+  );
+
   const arg = lastCallArg(consoleError);
   expect(arg).toContain(`+   "bundled": 10949`);
   expect(arg).toContain(`+   "minified": 5303`);
@@ -295,7 +314,7 @@ test("rollup treeshaker shows imports size", async () => {
 test("fail when matching missing snapshot", async () => {
   const snapshotPath = "fixtures/missing.size-snapshot.json";
 
-  try {
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
@@ -303,13 +322,9 @@ test("fail when matching missing snapshot", async () => {
         sizeSnapshot({ snapshotPath, matchSnapshot: true, printInfo: false }),
       ],
     });
-
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain(
-      "Size snapshot is missing. Please run rollup to create one."
-    );
-  }
+  }).rejects.toThrow(
+    /Size snapshot is missing. Please run rollup to create one./
+  );
 });
 
 test("match snapshot with threshold", async () => {
@@ -329,7 +344,7 @@ test("match snapshot with threshold", async () => {
     ],
   });
 
-  try {
+  await expect(async () => {
     await runRollup({
       input: "./fixtures/redux.js",
       output: { file: "fixtures/output.js", format: "esm" },
@@ -342,11 +357,9 @@ test("match snapshot with threshold", async () => {
         }),
       ],
     });
-
-    expect(true).toBe(false);
-  } catch (error) {
-    expect(error.message).toContain("Size snapshot is not matched");
-  }
+  }).rejects.toThrow(
+    /Size snapshot is not matched. Run rollup to rebuild one./
+  );
 
   errorFn.mockRestore();
 });
@@ -383,7 +396,7 @@ test("handle umd with esm", async () => {
   const snapshotPath = "fixtures/umd.size-snapshot.json";
   await runRollup({
     input: "./fixtures/umd.js",
-    plugins: [sizeSnapshot({ snapshotPath })],
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
     output: { file: path.resolve("fixtures/output.js"), format: "esm" },
   });
   const snapshot = pullSnapshot(snapshotPath);
@@ -399,4 +412,51 @@ test("handle umd with esm", async () => {
       },
     },
   });
+});
+
+test("cjs with empty source input (console warning expected in the Jest output)", async () => {
+  const snapshotPath = "fixtures/empty-source.size-snapshot.json";
+  await runRollup({
+    input: "./fixtures/empty-source.js",
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
+    output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
+  });
+  const snapshot = pullSnapshot(snapshotPath);
+
+  expect(snapshot).toMatchObject({
+    "output.js": {
+      bundled: 15,
+      minified: 13,
+      gzipped: 33,
+    },
+  });
+});
+
+test("cjs with comments only (console warning expected in the Jest output)", async () => {
+  const snapshotPath = "fixtures/comments-only.size-snapshot.json";
+  await runRollup({
+    input: "./fixtures/comments-only.js",
+    plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
+    output: { file: path.resolve("fixtures/output.js"), format: "cjs" },
+  });
+  const snapshot = pullSnapshot(snapshotPath);
+
+  expect(snapshot).toMatchObject({
+    "output.js": {
+      bundled: 15,
+      minified: 13,
+      gzipped: 33,
+    },
+  });
+});
+
+test("reproduce failure for esm with comments only ref: brodybits/rollup-plugin-size-snapshot#21", async () => {
+  const snapshotPath = "fixtures/comments-only.size-snapshot.json";
+  await expect(async () => {
+    await runRollup({
+      input: "./fixtures/comments-only.js",
+      plugins: [sizeSnapshot({ snapshotPath, printInfo: false })],
+      output: { file: path.resolve("fixtures/output.js"), format: "esm" },
+    });
+  }).rejects.toThrow(/no minified code for Webpack to process/);
 });
