@@ -54,11 +54,11 @@
     "lint-staged": "^10.5.4",
     "prettier": "~2.8.3",
     "redux": "^4.2.0",
-    "rollup": "~2.40.0",
+    "rollup": "~3.28.1",
     "strip-ansi": "^6.0.1"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0"
+    "rollup": "^2.0.0 || ^3.0.0"
   },
   "dependencies": {
     "@rollup/plugin-replace": "^5.0.2",
