@@ -58,7 +58,7 @@
     "strip-ansi": "^6.0.1"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0 || ^3.0.0"
+    "rollup": "^3.0.0"
   },
   "dependencies": {
     "@rollup/plugin-replace": "^5.0.2",
