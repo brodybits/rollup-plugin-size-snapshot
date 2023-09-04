@@ -56,9 +56,9 @@ test("write bundled, minified and gzipped size of es bundle", async () => {
 
   expect(snapshot).toMatchObject({
     "output.js": {
-      bundled: 11138,
-      minified: 5474,
-      gzipped: 2093,
+      bundled: 11074,
+      minified: 5419,
+      gzipped: 2062,
     },
   });
 });
@@ -74,14 +74,14 @@ test("works with output.dir option", async () => {
 
   expect(snapshot).toMatchObject({
     "pure-annotated.js": {
-      bundled: 1459,
-      gzipped: 476,
-      minified: 912,
+      bundled: 1395,
+      gzipped: 448,
+      minified: 857,
     },
     "redux.js": {
-      bundled: 11138,
-      minified: 5474,
-      gzipped: 2093,
+      bundled: 11074,
+      minified: 5419,
+      gzipped: 2062,
     },
   });
 });
@@ -99,9 +99,9 @@ test("print sizes", async () => {
 
   expect(stripAnsi(lastCallArg(consoleInfo))).toContain(
     'Computed sizes of "output.js" with "cjs" format\n' +
-      "  bundler parsing size: 11,138 B\n" +
-      "  browser parsing size (minified with terser): 5,474 B\n" +
-      "  download size (minified and gzipped): 2,093 B\n"
+      "  bundler parsing size: 11,074 B\n" +
+      "  browser parsing size (minified with terser): 5,419 B\n" +
+      "  download size (minified and gzipped): 2,062 B\n"
   );
 
   consoleInfo.mockRestore();
@@ -117,9 +117,9 @@ test("not affected by following terser plugin", async () => {
 
   expect(pullSnapshot(snapshotPath)).toMatchObject({
     "output.js": {
-      bundled: 11138,
-      minified: 5474,
-      gzipped: 2093,
+      bundled: 11074,
+      gzipped: 2062,
+      minified: 5419,
     },
   });
 });
@@ -135,9 +135,9 @@ test("minifies with some ES2020 syntax features", async () => {
 
   expect(pullSnapshot(snapshotPath)).toMatchObject({
     "es2020-features.esm.js": {
-      bundled: 224,
-      minified: 180,
-      gzipped: 150,
+      bundled: 216,
+      gzipped: 152,
+      minified: 176,
     },
   });
 });
@@ -245,7 +245,7 @@ test("treeshake with both rollup or webpack and external modules", async () => {
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 14 }),
-        webpack: expect.objectContaining({ code: 40 }),
+        webpack: expect.objectContaining({ code: 99 }),
       },
     }),
   });
@@ -376,18 +376,18 @@ test("write relative path when output is absolute", async () => {
 
   expect(stripAnsi(lastCallArg(consoleInfo))).toContain(
     'Computed sizes of "output.js" with "cjs" format\n' +
-      "  bundler parsing size: 11,138 B\n" +
-      "  browser parsing size (minified with terser): 5,474 B\n" +
-      "  download size (minified and gzipped): 2,093 B\n"
+      "  bundler parsing size: 11,074 B\n" +
+      "  browser parsing size (minified with terser): 5,419 B\n" +
+      "  download size (minified and gzipped): 2,062 B\n"
   );
 
   consoleInfo.mockRestore();
 
   expect(snapshot).toMatchObject({
     "output.js": {
-      bundled: 11138,
-      minified: 5474,
-      gzipped: 2093,
+      bundled: 11074,
+      gzipped: 2062,
+      minified: 5419,
     },
   });
 });
@@ -403,12 +403,12 @@ test("handle umd with esm", async () => {
 
   expect(snapshot).toMatchObject({
     "output.js": {
-      bundled: 262,
-      minified: 184,
-      gzipped: 133,
+      bundled: 269,
+      gzipped: 137,
+      minified: 188,
       treeshaked: {
         rollup: { code: 154 },
-        webpack: expect.toMatchCloseTo({ code: 550 }, -1.7), // +/- ~25
+        webpack: expect.toMatchCloseTo({ code: 690 }, -1.7), // +/- ~25
       },
     },
   });
