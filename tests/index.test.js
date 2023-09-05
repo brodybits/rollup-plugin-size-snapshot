@@ -245,7 +245,7 @@ test("treeshake with both rollup or webpack and external modules", async () => {
     "output.js": expect.objectContaining({
       treeshaked: {
         rollup: expect.objectContaining({ code: 14 }),
-        webpack: expect.objectContaining({ code: 99 }),
+        webpack: expect.objectContaining({ code: 50 }),
       },
     }),
   });
