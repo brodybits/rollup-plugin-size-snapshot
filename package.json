@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "babel src --out-dir dist",
-    "lint-check": "prettier --check --end-of-line=auto ./**/*.{js,md}",
+    "lint-check": "prettier --check --end-of-line auto --trailing-comma es5 ./**/*.{js,md}",
     "test-build": "rm -rf temp && mkdir -p temp && cp -r tests temp && babel src --out-dir temp/src && jest temp/tests",
     "test": "jest && yarn lint-check",
     "prepublishOnly": "yarn build"
@@ -52,7 +52,7 @@
     "jest": "^29.6.4",
     "jest-matcher-deep-close-to": "^3.0.2",
     "lint-staged": "^10.5.4",
-    "prettier": "~2.8.3",
+    "prettier": "~3.0.3",
     "redux": "^4.2.1",
     "rollup": "~3.28.1",
     "strip-ansi": "^6.0.1"
