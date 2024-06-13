@@ -55,7 +55,7 @@ export const treeshakeWithRollup = (code: string): Promise<Output> => {
     .then((result): Output => {
       const ast = parse(result.code, {
         sourceType: "module",
-        ecmaVersion: 2020,
+        ecmaVersion: "latest",
       });
       const import_statements = ast.body
         // collect all toplevel import statements
